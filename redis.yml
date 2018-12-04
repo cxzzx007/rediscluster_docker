@@ -1,0 +1,98 @@
+version: '3.4'
+services:
+ clusterslave1:
+  container_name: clusterslave1
+  image: redis
+  hostname: clusterslave1
+  user: root
+  ports:
+    - "6389:6379"
+  networks:
+    redisnetwork:
+        ipv4_address: 10.2.0.2
+  volumes:
+    - "/var/rediscluster/slave1/conf/redis.conf:/usr/local/etc/redis/redis.conf"
+    - "/var/rediscluster/slave1/data:/data"
+  command: redis-server /usr/local/etc/redis/redis.conf
+ clusterslave2:
+  container_name: clusterslave2
+  image: redis
+  hostname: clusterslave2
+  user: root
+  ports:
+    - "6390:6379"
+  networks:
+    redisnetwork:
+        ipv4_address: 10.2.0.3
+  volumes:
+    - "/var/rediscluster/slave2/conf/redis.conf:/usr/local/etc/redis/redis.conf"
+    - "/var/rediscluster/slave2/data:/data"
+  command: redis-server /usr/local/etc/redis/redis.conf
+ clusterslave3:
+  container_name: clusterslave3
+  image: redis
+  hostname: clusterslave3
+  user: root
+  ports:
+    - "6391:6379"
+  networks:
+    redisnetwork:
+        ipv4_address: 10.2.0.4
+  volumes:
+    - "/var/rediscluster/slave3/conf/redis.conf:/usr/local/etc/redis/redis.conf"
+    - "/var/rediscluster/slave3/data:/data"
+  command: redis-server /usr/local/etc/redis/redis.conf
+ clusterslave4:
+  container_name: clusterslave4
+  image: redis
+  hostname: clusterslave4
+  user: root
+  ports:
+    - "6392:6379"
+  networks:
+    redisnetwork:
+        ipv4_address: 10.2.0.5
+  volumes:
+    - "/var/rediscluster/slave4/conf/redis.conf:/usr/local/etc/redis/redis.conf"
+    - "/var/rediscluster/slave4/data:/data"
+  command: redis-server /usr/local/etc/redis/redis.conf
+ clusterslave5:
+  container_name: clusterslave5
+  image: redis
+  hostname: clusterslave5
+  user: root
+  ports:
+    - "6393:6379"
+  networks:
+    redisnetwork:
+        ipv4_address: 10.2.0.6
+  volumes:
+    - "/var/rediscluster/slave5/conf/redis.conf:/usr/local/etc/redis/redis.conf"
+    - "/var/rediscluster/slave5/data:/data"
+  command: redis-server /usr/local/etc/redis/redis.conf
+ clusterslave6:
+  container_name: clusterslave6
+  image: redis
+  hostname: clusterslave6
+  user: root
+  ports:
+    - "6394:6379"
+  networks:
+    redisnetwork:
+        ipv4_address: 10.2.0.7
+  volumes:
+    - "/var/rediscluster/slave6/conf/redis.conf:/usr/local/etc/redis/redis.conf"
+    - "/var/rediscluster/slave6/data:/data"
+  command: sh -c "redis-server /usr/local/etc/redis/redis.conf"
+  depends_on:
+      - clusterslave1
+      - clusterslave2
+      - clusterslave3
+      - clusterslave4
+      - clusterslave5
+networks:
+    redisnetwork:
+          driver: bridge
+          ipam:
+            config:
+             - subnet: 10.2.0.0/16
